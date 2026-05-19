@@ -1,0 +1,3 @@
+../RTG/Src/Tools.c:4:5:__io_putchar	1
+../RTG/Src/Tools.c:9:5:_write	1
+../RTG/Src/Tools.c:15:5:__io_getchar	1
