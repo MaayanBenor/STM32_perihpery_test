@@ -6,21 +6,27 @@
 # Add inputs and outputs from these tool invocations to the build variables 
 C_SRCS += \
 ../RTG/Src/Tools.c \
+../RTG/Src/eth_protocol.c \
 ../RTG/Src/rtg.c \
 ../RTG/Src/rtg_tasks.c \
-../RTG/Src/server.c 
+../RTG/Src/server_eth_packet.c \
+../RTG/Src/server_message.c 
 
 OBJS += \
 ./RTG/Src/Tools.o \
+./RTG/Src/eth_protocol.o \
 ./RTG/Src/rtg.o \
 ./RTG/Src/rtg_tasks.o \
-./RTG/Src/server.o 
+./RTG/Src/server_eth_packet.o \
+./RTG/Src/server_message.o 
 
 C_DEPS += \
 ./RTG/Src/Tools.d \
+./RTG/Src/eth_protocol.d \
 ./RTG/Src/rtg.d \
 ./RTG/Src/rtg_tasks.d \
-./RTG/Src/server.d 
+./RTG/Src/server_eth_packet.d \
+./RTG/Src/server_message.d 
 
 
 # Each subdirectory must supply rules for building sources it contributes
@@ -30,7 +36,7 @@ RTG/Src/%.o RTG/Src/%.su RTG/Src/%.cyclo: ../RTG/Src/%.c RTG/Src/subdir.mk
 clean: clean-RTG-2f-Src
 
 clean-RTG-2f-Src:
-	-$(RM) ./RTG/Src/Tools.cyclo ./RTG/Src/Tools.d ./RTG/Src/Tools.o ./RTG/Src/Tools.su ./RTG/Src/rtg.cyclo ./RTG/Src/rtg.d ./RTG/Src/rtg.o ./RTG/Src/rtg.su ./RTG/Src/rtg_tasks.cyclo ./RTG/Src/rtg_tasks.d ./RTG/Src/rtg_tasks.o ./RTG/Src/rtg_tasks.su ./RTG/Src/server.cyclo ./RTG/Src/server.d ./RTG/Src/server.o ./RTG/Src/server.su
+	-$(RM) ./RTG/Src/Tools.cyclo ./RTG/Src/Tools.d ./RTG/Src/Tools.o ./RTG/Src/Tools.su ./RTG/Src/eth_protocol.cyclo ./RTG/Src/eth_protocol.d ./RTG/Src/eth_protocol.o ./RTG/Src/eth_protocol.su ./RTG/Src/rtg.cyclo ./RTG/Src/rtg.d ./RTG/Src/rtg.o ./RTG/Src/rtg.su ./RTG/Src/rtg_tasks.cyclo ./RTG/Src/rtg_tasks.d ./RTG/Src/rtg_tasks.o ./RTG/Src/rtg_tasks.su ./RTG/Src/server_eth_packet.cyclo ./RTG/Src/server_eth_packet.d ./RTG/Src/server_eth_packet.o ./RTG/Src/server_eth_packet.su ./RTG/Src/server_message.cyclo ./RTG/Src/server_message.d ./RTG/Src/server_message.o ./RTG/Src/server_message.su
 
 .PHONY: clean-RTG-2f-Src
 

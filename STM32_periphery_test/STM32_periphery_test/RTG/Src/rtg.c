@@ -1,9 +1,9 @@
 #include "rtg.h"
 #include "rtg_tasks.h"
 
-#include "stdio.h"
-#include "FreeRTOS.h"
-#include "task.h"
+#include <stdio.h>
+#include <FreeRTOS.h>
+#include <task.h>
 
 
 void rtg_init(void){

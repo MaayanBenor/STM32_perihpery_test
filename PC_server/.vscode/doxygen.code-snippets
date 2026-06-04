@@ -1,0 +1,15 @@
+{
+  "Doxygen Function Comment": {
+    "scope": "c,cpp",
+    "prefix": "/**",
+    "description": "Insert a Doxygen function comment template",
+    "body": [
+      "/**",
+      " * @brief ${1:Brief description}",
+      " *",
+      " * @param ${2:param} ${3:Parameter description}",
+      " * @return ${4:return_value_description}",
+      " */"
+    ]
+  }
+}
