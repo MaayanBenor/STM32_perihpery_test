@@ -16,6 +16,7 @@ void server_eth_packet_task(void *argument){
 	struct sockaddr_in addr, client_addr;
 	socklen_t client_addr_len = sizeof(client_addr);
 	eth_protocol_test_t rx_packet = {0};
+	eth_protocol_result_t tx_packet = {0};
 
 
 	sock = socket(AF_INET, SOCK_DGRAM, IPPROTO_UDP);
@@ -41,10 +42,12 @@ void server_eth_packet_task(void *argument){
 			while(1){}
 		}
 		print_eth_test(&rx_packet);
-
-		if(sendto(sock, &rx_packet, sizeof(rx_packet), 0, (struct sockaddr *) &client_addr, client_addr_len)
+		tx_packet.test_ID = rx_packet.test_ID;
+		tx_packet.result = 1;
+		//todo: send tx_packet as a eth_result back.
+		if(sendto(sock, &tx_packet, sizeof(tx_packet), 0, (struct sockaddr *) &client_addr, client_addr_len)
 				<
-			sizeof(rx_packet)){
+			sizeof(tx_packet)){
 			perror("sendto failed");
 			while(1){}
 		}

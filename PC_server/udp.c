@@ -86,18 +86,19 @@ int udp_receive_message(){
 
 /**
  * @brief Receive a UDP datagram, print it, and echo it back.
- * @return int 0 on success, 1 on failure.
+ * @return rx_packet which holds .result = 0 on failure
+ *                                       =  non 0 value on success.
  */
-int udp_receive_eth_packet(){
-    eth_protocol_test_t rx_packet = {0}; //TODO: choose where information is processed. In main?
-    //Is ready to receive all the packet including max payload.
-  	if(recvfrom(g_sock, &rx_packet, MAX_TEST_PACKET_SZ, 0,
-			(struct sockaddr *) &g_client_addr, &g_client_addr_len) == -1){
-        perror("recvfrom faild");
-		return -1;
-	}
+//TODO: save test id and result in a file on computer. sql3?
+eth_protocol_result_t udp_receive_eth_result(){
+    eth_protocol_result_t rx_packet = {0};
 
-    return 0;
+	if(recvfrom(g_sock, &rx_packet, sizeof(rx_packet), 0,
+			(struct sockaddr *) &g_client_addr, &g_client_addr_len) == -1){
+        perror("recvfrom failed");
+		return rx_packet;
+	}
+    return rx_packet;
 }
 
 /**
@@ -140,7 +141,7 @@ int udp_send_eth_packet(const eth_protocol_test_t* packet){
  */
 int udp_close(){
     if(g_sock < 0){
-        return 0; //Aleardy closed
+        return 0; //Already closed
     }
 
     if(close(g_sock) != 0){

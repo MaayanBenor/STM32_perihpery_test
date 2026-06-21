@@ -13,11 +13,11 @@
 
 ## Implemented Behavior
 
-1. Program clears terminal and starts in [main.c](main.c#L20).
-2. UDP socket is created and bound to port 5000 in [udp.c](udp.c#L32).
-3. A startup message is sent to the STM target at 10.0.1.101 in [udp.c](udp.c#L86).
-4. One UDP packet is received, printed, and echoed back in [udp.c](udp.c#L65).
-4. UDP socket is closed properly and used resources are freed. in [udp.c](udp.c#L102)
+1. UDP socket is created and bound to port 5000 in [udp.c](udp.c#L32).
+2. A test packet is sent to the STM target at 10.0.1.101 in [udp.c](udp.c#L86).
+3. One UDP packet is received and sent to main[udp.c](udp.c#L65).
+4. The packet is saved to file and all saved packets are printed.
+5. UDP socket is closed properly and used resources are freed. in [udp.c](udp.c#L102)
 
 ## Protocol Foundations
 
@@ -25,8 +25,10 @@
 - Packed response structure: [eth_protocol.h](eth_protocol.h#L24)
 
 ## Notes
-### ToDo:
-- Use the eth_protocol to communicate.
-    - Send. 
-    - Receive.
+### TODO:
+- make it a CLI
+    - check which flags are activated through the args and appropriately handle them.
+- clean main
+- keep calc time for sending and duration of tests
+- check pdf for extra TODOs
     

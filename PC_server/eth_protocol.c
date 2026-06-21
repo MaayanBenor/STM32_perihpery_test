@@ -3,7 +3,7 @@
 #include <inttypes.h>
 
 /**
- * @brief debugging function that prints an eth_protocol_test_t completely.
+ * @brief debugging func that prints an eth_protocol_test_t.
  *
  * @param t the struct holding the eth communication protocol.
  */
@@ -19,4 +19,14 @@ void print_eth_test(const eth_protocol_test_t *t){
         printf(" %02X", t->payload[i]);
     }
     printf("\n");
+}
+
+/**
+ * @brief debugging func that prints an eth_protocol_result_t.
+ *
+ * @param r the struct holding the eth communication protocol
+ */
+
+void print_eth_result(const eth_protocol_result_t *r){
+    printf("test_ID=%" PRIu32 " test result=%u\n", r->test_ID, r->result);
 }

@@ -20,10 +20,9 @@ int udp_receive_message();
 
 /**
  * @brief Receive one UDP datagram containing a eth_protocol_packet.
- * @return int 0 on success, 1 on error.
+ * @return eth_protocol_result_t that was received.
  */
-//TODO: make it udp_receive_eth_result
-int udp_receive_eth_packet();
+eth_protocol_result_t udp_receive_eth_result();
 
 
 /**

@@ -8,7 +8,7 @@ CFLAGS = -Wall -Wextra -g
 
 TARGET = server
 
-SRC = main.c udp.c eth_protocol.c
+SRC = main.c udp.c eth_protocol.c records.c
 OBJ = $(SRC:.c=.o)
 
 all: $(TARGET)
@@ -16,7 +16,7 @@ all: $(TARGET)
 $(TARGET): $(OBJ)
 	$(CC) $(CFLAGS) -o $(TARGET) $(OBJ)
 
-%.o: %.c eth_protocol.h udp.h
+%.o: %.c eth_protocol.h udp.h records.h
 	$(CC) $(CFLAGS) -c $<
 
 clean:
