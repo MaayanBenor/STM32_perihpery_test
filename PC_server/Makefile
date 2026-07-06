@@ -14,7 +14,7 @@ OBJ = $(SRC:.c=.o)
 all: $(TARGET)
 
 $(TARGET): $(OBJ)
-	$(CC) $(CFLAGS) -o $(TARGET) $(OBJ)
+	$(CC) $(CFLAGS) -o $(TARGET) $(OBJ) -lsqlite3
 
 %.o: %.c eth_protocol.h udp.h records.h
 	$(CC) $(CFLAGS) -c $<

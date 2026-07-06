@@ -26,9 +26,17 @@
 
 ## Notes
 ### TODO:
+- check that SQLite3 works correctly.
+    - all code is written and tested for errors.
+    - make runs without errors.
+    - need to test with stm32 to see that it saves to file and prints correctly.
+- make calc time for sending and duration of tests
 - make it a CLI
-    - check which flags are activated through the args and appropriately handle them.
+- check which flags are activated through the args and appropriately handle them.
 - clean main
-- keep calc time for sending and duration of tests
 - check pdf for extra TODOs
+
+
+### At the very end of the project:
+- remove \__FILE__ AND \__LINE__ from errors that the user might see. leave the rest that only developers will see.
     

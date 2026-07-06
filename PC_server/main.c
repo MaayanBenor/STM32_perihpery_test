@@ -40,7 +40,6 @@
 //TODO: ask Leah if the CLI needs to be a continues program.
 int main(void){
     // printf("\033[2J\033[H"); // Cleans the terminal
-    test_record_t record = {.timestamp = "00:00", .duration_sec = 0};
     eth_protocol_result_t rx_packet;
     eth_protocol_test_t eth_test = {0};
     eth_test.test_ID = 1;
@@ -65,9 +64,7 @@ int main(void){
         return 1;
     }
     
-    record.result = rx_packet.result;
-    record.test_id = rx_packet.test_ID;
-    save_test_record(&record);
+    save_test_record(rx_packet.test_ID, "12:34:56:78", 1.25, rx_packet.result);
     print_all_test_records();
 
     if (udp_close() != 0){

@@ -89,7 +89,6 @@ int udp_receive_message(){
  * @return rx_packet which holds .result = 0 on failure
  *                                       =  non 0 value on success.
  */
-//TODO: save test id and result in a file on computer. sql3?
 eth_protocol_result_t udp_receive_eth_result(){
     eth_protocol_result_t rx_packet = {0};
 
