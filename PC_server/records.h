@@ -1,6 +1,8 @@
 #pragma once
 
 #include <stdint.h>
+#include <time.h>
+
 
 /**
  * @file [records.h](http://_vscodecontentref_/2)
@@ -28,7 +30,7 @@ void records_db_close(void);
  * @return 0 on success, non-zero on failure.
  */
 int save_test_record(uint32_t test_id,
-                     const char *sent_at,
+                     time_t sent_at,
                      double duration_sec,
                      uint8_t raw_result);
 

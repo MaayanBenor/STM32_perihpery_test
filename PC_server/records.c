@@ -3,6 +3,7 @@
 #include <inttypes.h>
 #include <sqlite3.h>
 #include <stdio.h>
+#include <time.h>
 
 #define DB_FILE "test_records"
 
@@ -24,7 +25,7 @@ int records_db_init(void)
     const char *create_sql =
         "CREATE TABLE IF NOT EXISTS records ("
         "  test_id INTEGER PRIMARY KEY,"
-        "  sent_at TEXT NOT NULL,"
+        "  sent_at INTEGER NOT NULL,"
         "  duration_sec REAL NOT NULL,"
         "  result TEXT NOT NULL CHECK(result IN ('Success','Failure','NetworkError'))"
         ");";
@@ -53,7 +54,7 @@ void records_db_close(void)
 }
 
 int save_test_record(uint32_t test_id,
-                     const char *sent_at,
+                     time_t sent_at,
                      double duration_sec,
                      uint8_t raw_result)
 {
@@ -67,10 +68,6 @@ int save_test_record(uint32_t test_id,
         return 1;
     }
     
-    if(sent_at == NULL){
-        fprintf(stderr, "%s:%d: sent_at == NULL\n", __FILE__, __LINE__);
-        return 1;
-    }
 
     if (sqlite3_prepare_v2(global_db, insert_sql, -1, &stmt, NULL) != SQLITE_OK) {
         fprintf(stderr, "%s:%d: sqlite3_prepare_v2 failed: %s\n", __FILE__, __LINE__, sqlite3_errmsg(global_db));
@@ -78,7 +75,7 @@ int save_test_record(uint32_t test_id,
     }
 
     sqlite3_bind_int64(stmt, 1, (sqlite3_int64)test_id);
-    sqlite3_bind_text(stmt, 2, sent_at, -1, SQLITE_TRANSIENT);
+    sqlite3_bind_int64(stmt, 2, (int64_t)sent_at);
     sqlite3_bind_double(stmt, 3, duration_sec);
     sqlite3_bind_text(stmt, 4, result_to_text(raw_result), -1, SQLITE_TRANSIENT);
 
@@ -99,6 +96,8 @@ int save_test_record(uint32_t test_id,
 
 int print_test_record(uint32_t test_id)
 {
+    char human_readable_time[32];
+    struct tm *temp_time;
     sqlite3_stmt *stmt = NULL;
     const char *select_sql =
         "SELECT test_id, sent_at, duration_sec, result "
@@ -117,13 +116,25 @@ int print_test_record(uint32_t test_id)
     sqlite3_bind_int64(stmt, 1, (sqlite3_int64)test_id);
 
     if (sqlite3_step(stmt) == SQLITE_ROW) {
-        uint32_t id = (uint32_t)sqlite3_column_int64(stmt, 0);
-        const unsigned char *ts = sqlite3_column_text(stmt, 1);
-        double dur = sqlite3_column_double(stmt, 2);
-        const unsigned char *res = sqlite3_column_text(stmt, 3);
+        uint32_t test_id = (uint32_t)sqlite3_column_int64(stmt, 0);
+        const time_t time_sent = sqlite3_column_int64(stmt, 1);
+        double duration_sec = sqlite3_column_double(stmt, 2);
+        const unsigned char *result = sqlite3_column_text(stmt, 3);
+
+        temp_time = localtime(&time_sent);
+        if(temp_time == NULL){
+            perror("localtime");
+            return 1;
+        }
+        
+        if(strftime(human_readable_time, sizeof(human_readable_time),
+                               "%Y/%m/%d %H:%M:%S", temp_time) == 0){
+            fprintf(stderr, "%s:%d: strftime returned 0", __FILE__, __LINE__);
+            return 1;
+        }
 
         printf("TEST-ID=%" PRIu32 " DateTime=%s Duration=%.6f sec Result=%s\n",
-               id, ts, dur, res);
+               test_id, human_readable_time, duration_sec, result);
     } else {
         fprintf(stderr, "No record found for TEST-ID=%" PRIu32 "\n",test_id);
     }
@@ -134,6 +145,8 @@ int print_test_record(uint32_t test_id)
 
 int print_all_test_records(void)
 {
+    char human_readable_time[32];
+    struct tm *temp_time;
     sqlite3_stmt *stmt = NULL;
     int step_rc;
     int found = 0;
@@ -152,13 +165,25 @@ int print_all_test_records(void)
 
     while ((step_rc = sqlite3_step(stmt)) == SQLITE_ROW) {
         found = 1;
-        uint32_t id = (uint32_t)sqlite3_column_int64(stmt, 0);
-        const unsigned char *ts = sqlite3_column_text(stmt, 1);
-        double dur = sqlite3_column_double(stmt, 2);
-        const unsigned char *res = sqlite3_column_text(stmt, 3);
+        uint32_t test_id = (uint32_t)sqlite3_column_int64(stmt, 0);
+        const time_t time_sent = sqlite3_column_int64(stmt, 1);
+        double duration_sec = sqlite3_column_double(stmt, 2);
+        const unsigned char *result = sqlite3_column_text(stmt, 3);
 
-        printf("TEST-ID=%" PRIu32 " DateTime=%s Duration=%.6f sec Result=%s\n",
-               id, ts, dur, res);
+        temp_time = localtime(&time_sent);
+        if(temp_time == NULL){
+            perror("localtime");
+            return 1;
+        }
+        
+        if(strftime(human_readable_time, sizeof(human_readable_time),
+                               "%Y/%m/%d %H:%M:%S", temp_time) == 0){
+            fprintf(stderr, "%s:%d: strftime returned 0", __FILE__, __LINE__);
+            return 1;
+        }
+
+        printf("TEST-ID=%" PRIu32 " DateTime=%s Duration=%.10f sec Result=%s\n",
+               test_id, human_readable_time, duration_sec, result);
     }
 
     if (step_rc != SQLITE_DONE) {

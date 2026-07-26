@@ -15,7 +15,7 @@
 
 1. UDP socket is created and bound to port 5000 in [udp.c](udp.c#L32).
 2. A test packet is sent to the STM target at 10.0.1.101 in [udp.c](udp.c#L86).
-3. One UDP packet is received and sent to main[udp.c](udp.c#L65).
+3. One UDP packet is received and sent to main [udp.c](udp.c#L65).
 4. The packet is saved to file and all saved packets are printed.
 5. UDP socket is closed properly and used resources are freed. in [udp.c](udp.c#L102)
 
@@ -26,11 +26,6 @@
 
 ## Notes
 ### TODO:
-- check that SQLite3 works correctly.
-    - all code is written and tested for errors.
-    - make runs without errors.
-    - need to test with stm32 to see that it saves to file and prints correctly.
-- make calc time for sending and duration of tests
 - make it a CLI
 - check which flags are activated through the args and appropriately handle them.
 - clean main
