@@ -20,7 +20,6 @@
  *
  * @return int Returns 0 on normal termination.
  */
-//TODO: ask Leah if the CLI needs to be a continues program.
 //TODO: Check all return values
 int main(void){
     // printf("\033[2J\033[H"); // Cleans the terminal
@@ -33,7 +32,7 @@ int main(void){
 
     eth_protocol_result_t rx_packet;
     eth_protocol_test_t eth_test = {0};
-    eth_test.test_ID = 2;
+    eth_test.test_ID = 3;
     eth_test.peripheral_to_be_tested = 1;
     eth_test.num_of_test_iterations = 100;
     eth_test.payload_size = 3;
@@ -59,6 +58,7 @@ int main(void){
         return 1;
     }
 
+    //TODO: figure out how to handle failure in main from this function
     rx_packet = udp_receive_eth_result();
 
     if(clock_gettime(CLOCK_REALTIME, &end) != 0){

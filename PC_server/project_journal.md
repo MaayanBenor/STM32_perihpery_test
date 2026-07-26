@@ -26,7 +26,8 @@
 
 ## Notes
 ### TODO:
-- make it a CLI
+- make it a CLI (waiting for an email from Leah)
+    - until then, work on the STM32
 - check which flags are activated through the args and appropriately handle them.
 - clean main
 - check pdf for extra TODOs

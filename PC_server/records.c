@@ -128,12 +128,12 @@ int print_test_record(uint32_t test_id)
         }
         
         if(strftime(human_readable_time, sizeof(human_readable_time),
-                               "%Y/%m/%d %H:%M:%S", temp_time) == 0){
+                               "%d/%m/%Y %H:%M:%S", temp_time) == 0){
             fprintf(stderr, "%s:%d: strftime returned 0", __FILE__, __LINE__);
             return 1;
         }
 
-        printf("TEST-ID=%" PRIu32 " DateTime=%s Duration=%.6f sec Result=%s\n",
+        printf("TEST-ID=%" PRIu32 " | DateTime=%s | Duration=%.6f sec | Result=%s\n",
                test_id, human_readable_time, duration_sec, result);
     } else {
         fprintf(stderr, "No record found for TEST-ID=%" PRIu32 "\n",test_id);
@@ -177,12 +177,12 @@ int print_all_test_records(void)
         }
         
         if(strftime(human_readable_time, sizeof(human_readable_time),
-                               "%Y/%m/%d %H:%M:%S", temp_time) == 0){
+                               "%d/%m/%Y %H:%M:%S", temp_time) == 0){
             fprintf(stderr, "%s:%d: strftime returned 0", __FILE__, __LINE__);
             return 1;
         }
 
-        printf("TEST-ID=%" PRIu32 " DateTime=%s Duration=%.10f sec Result=%s\n",
+        printf("TEST-ID=%" PRIu32 " | DateTime=%s | Duration=%.10f sec | Result=%s\n",
                test_id, human_readable_time, duration_sec, result);
     }
 
